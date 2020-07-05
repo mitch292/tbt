@@ -4,8 +4,9 @@ gimmeplan is a cli tool that you can use to keep track of the state of your infr
 ## What's required to use gimmeplan?
 gimmeplan is very much in MVP / single use case stage of development. To run today, you'll need a couple dependencies resolved.
 * Your own slack application with access to your workspace
-* A machine with git install and SSH access to your git repo
+* A machine with git installed and SSH access to your git repo
 * Valid AWS credentials to run `terraform plan` - ONLY AWS IS SUPPORTED
+* Terraform state is managed through shared state
 
 ## How do I use gimmeplan?
 You configure a `.gimmeplan.yaml` file that details the projects you want generate slack updates for.
