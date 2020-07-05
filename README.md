@@ -4,7 +4,7 @@ gimmeplan is a cli tool that you can use to keep track of the state of your infr
 ## What's required to use gimmeplan?
 gimmeplan is very much in MVP / single use case stage of development. To run today, you'll need a couple dependencies resolved.
 * Your own slack application with access to your workspace
-* A machine with git install and access to your git repo
+* A machine with git install and SSH access to your git repo
 * Valid AWS credentials to run `terraform plan` - ONLY AWS IS SUPPORTED
 
 ## How do I use gimmeplan?
@@ -30,13 +30,15 @@ The `gimmeplan.yaml` file should be very simple. Below is a sample file structur
 projects:
     web_infra:
         slack_webhook_url: "https://hooks.slack.com/services/YOUR_WEBHOOK_URL"
-        git_repo_url: "https://github.com/REPO_WITH_TERRAFORM/"
+        git_repo_url: "git@github.com:user/repo.git"
+        dir_name: "NAME_OF_DIR_TO_CREATE_AND_DELETE"
         aws_api_key: "YOUR_AWS_API_KEY"
         aws_secret: "YOUR_AWS_API_KEY_SECRET"
         aws_default_region: "YOUR_AWS_DEFAULT_REGION"
     reporting_worker:
         slack_webhook_url: "https://hooks.slack.com/services/YOUR_WEBHOOK_URL"
-        git_repo_url: "https://github.com/REPO_WITH_TERRAFORM/"
+        git_repo_url: "git@github.com:user/repo.git"
+        dir_name: "NAME_OF_DIR_TO_CREATE_AND_DELETE"
         aws_api_key: "YOUR_AWS_API_KEY"
         aws_secret: "YOUR_AWS_API_KEY_SECRET"
         aws_default_region: "YOUR_AWS_DEFAULT_REGION"

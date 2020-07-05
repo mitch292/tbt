@@ -10,7 +10,7 @@ import (
 )
 
 // Plan will execute a terraform plan command in a given repo
-func Plan(repoName, project string) ([]byte, error) {
+func Plan(repoName, project string) []byte {
 
 	initCmd := exec.Command("terraform", "init")
 	initCmd.Env = append(os.Environ(),
@@ -34,5 +34,5 @@ func Plan(repoName, project string) ([]byte, error) {
 	if err != nil {
 		log.Fatalf("Didn't get the output: %s\n", err)
 	}
-	return out, nil
+	return out
 }

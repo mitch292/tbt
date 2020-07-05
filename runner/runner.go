@@ -1,7 +1,6 @@
 package runner
 
 import (
-	"log"
 	"os"
 
 	"github.com/mitch292/gimmeplan/git"
@@ -15,17 +14,14 @@ import (
 func PlanAndPostToSlack(project string) {
 
 	// 1: Clone the git repo
-	repoName, err := git.Clone(viper.GetString(utils.GetViperString(project, "git_repo_url")))
-	if err != nil {
-		log.Fatalf("There was an error cloning the git repo: %s\n", err)
-	}
+	git.Clone(viper.GetString(utils.GetViperString(project, "git_repo_url")))
 
 	// 2: In the git repo, run terraform plan
-	output, err := tf.Plan(repoName, project)
+	output := tf.Plan(viper.GetString(utils.GetViperString(project, "dir_name")), project)
 
 	// 3: Output this plan to slack
 	slack.Send(viper.GetString(utils.GetViperString(project, "slack_webhook_url")), output)
 
 	// 4 Remove the git repo
-	os.RemoveAll("./" + repoName)
+	os.RemoveAll("./" + viper.GetString(utils.GetViperString(project, "dir_name")))
 }
