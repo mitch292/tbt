@@ -17,13 +17,9 @@ package cmd
 
 import (
 	"log"
-	"os"
 
-	"github.com/mitch292/gimmeplan/git"
-	"github.com/mitch292/gimmeplan/slack"
-	"github.com/mitch292/gimmeplan/tf"
+	"github.com/mitch292/gimmeplan/runner"
 	"github.com/spf13/cobra"
-	"github.com/spf13/viper"
 )
 
 // slackCmd represents the slack command
@@ -41,20 +37,8 @@ even though it leads to managing more webhooks in slack.`,
 			log.Fatalf("Project name not given or not found in your .gimmeplan config file, %s\n", err)
 		}
 
-		// 1: Clone the git repo
-		repoName, err := git.Clone(viper.GetString(project + ".git_repo_url"))
-		if err != nil {
-			log.Fatalf("There was an error cloning the git repo: %s\n", err)
-		}
+		runner.PlanAndPostToSlack(project)
 
-		// 2: In the git repo, run terraform plan
-		output, err := tf.Plan(repoName, project)
-
-		// 3: Output this plan to slack
-		slack.Send(viper.GetString(project+".slack_webhook_url"), output)
-
-		// 4 Remove the git repo
-		os.RemoveAll("./" + repoName)
 	},
 }
 
