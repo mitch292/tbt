@@ -6,6 +6,8 @@ import (
 	"log"
 	"net/http"
 	"time"
+
+	"github.com/mitch292/gimmeplan/utils"
 )
 
 // RequestBody is used to marshal our text to json
@@ -15,7 +17,7 @@ type RequestBody struct {
 
 // Send will submit a given content message to a given webhook url
 func Send(webhookURL string, content []byte) {
-	slackBody, err := json.Marshal(RequestBody{Text: string(content)})
+	slackBody, err := json.Marshal(RequestBody{Text: utils.RemoveRefreshData(string(content))})
 	if err != nil {
 		log.Fatalf("There was a problem creating the json body: %s\n", err)
 	}
