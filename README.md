@@ -1,32 +1,36 @@
-## What is gimmeplan?
-gimmeplan is a cli tool that you can use to keep track of the state of your infrastructure compared to your terraform configuration. It'll clone your git repo, run terraform plan, output that to a slack channel.
+## What is tbt?
 
-## What's required to use gimmeplan?
-gimmeplan is very much in MVP / single use case stage of development. To run today, you'll need a couple dependencies resolved.
-* Your own slack application with access to your workspace
-* A machine with git installed and SSH access to your git repo
-* Valid AWS credentials to run `terraform plan` - ONLY AWS IS SUPPORTED
-* Terraform state is managed through shared state
+tbt is a cli tool that you can use to keep track of the state of your infrastructure compared to your terraform configuration. It'll clone your git repo, run terraform plan, output that to a slack channel.
 
-## How do I use gimmeplan?
-You configure a `.gimmeplan.yaml` file that details the projects you want generate slack updates for.
+## What's required to use tbt?
+
+tbt is very much in MVP / single use case stage of development. To run today, you'll need a couple dependencies resolved.
+
+-   Your own slack application with access to your workspace
+-   A machine with git installed and SSH access to your git repo
+-   Valid AWS credentials to run `terraform plan` - ONLY AWS IS SUPPORTED
+-   Terraform state is managed through shared state
+
+## How do I use tbt?
+
+You configure a `.tbt.yaml` file that details the projects you want generate slack updates for.
 
 To output a plan to slack for a single project you can use:
+
 ```
-gimmeplan slack -p=my_infra
+tbt slack -p=my_infra
 ```
+
 or
+
 ```
-gimmeplan slack --project=my_infra
+tbt slack --project=my_infra
 ```
 
-To output a plan to slack for all your configured projects you can use:
-```
-gimmeplan slack all
-```
+## What should my .tbt.yaml file look like?
 
-## What should my .gimmeplan.yaml file look like? 
-The `gimmeplan.yaml` file should be very simple. Below is a sample file structure.
+The `tbt.yaml` file should be very simple. Below is a sample file structure.
+
 ```yaml
 projects:
     web_infra:

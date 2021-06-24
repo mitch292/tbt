@@ -15,7 +15,7 @@ limitations under the License.
 */
 package main
 
-import "github.com/mitch292/gimmeplan/cmd"
+import "github.com/mitch292/tbt/cmd"
 
 func main() {
 	cmd.Execute()

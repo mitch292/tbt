@@ -18,15 +18,15 @@ package cmd
 import (
 	"log"
 
-	"github.com/mitch292/gimmeplan/runner"
+	"github.com/mitch292/tbt/internal/tbt"
 	"github.com/spf13/cobra"
 )
 
 // slackCmd represents the slack command
 var slackCmd = &cobra.Command{
 	Use:   "slack",
-	Short: "Output the terraform plan to the slack webhooks configured in your .gimmeplan file",
-	Long: `Output the terraform plan to the slack webhooks configured in your .gimmeplan file
+	Short: "Output the terraform plan to the slack webhooks configured in your .tbt file",
+	Long: `Output the terraform plan to the slack webhooks configured in your .tbt file
 You can run plan for only a single file or instead output plans for all your terraform repos.
 It's good practice to output these plans to different slack channels to keep things organized,
 even though it leads to managing more webhooks in slack.`,
@@ -34,10 +34,10 @@ even though it leads to managing more webhooks in slack.`,
 
 		project, err := cmd.Flags().GetString("project")
 		if err != nil {
-			log.Fatalf("Project name not given or not found in your .gimmeplan config file, %s\n", err)
+			log.Fatalf("Project name not given or not found in your .tbt config file, %s\n", err)
 		}
 
-		runner.PlanAndPostToSlack(project)
+		tbt.GetTerraformPlanAndPostToSlack(project)
 
 	},
 }
@@ -45,5 +45,5 @@ even though it leads to managing more webhooks in slack.`,
 func init() {
 	rootCmd.AddCommand(slackCmd)
 
-	slackCmd.Flags().StringP("project", "p", "", "The name of the project set in your .gimmeplan config file for this plan")
+	slackCmd.Flags().StringP("project", "p", "", "The name of the project set in your .tbt config file for this plan")
 }
