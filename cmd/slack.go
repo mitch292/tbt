@@ -20,6 +20,7 @@ import (
 
 	"github.com/mitch292/tbt/internal/tbt"
 	"github.com/spf13/cobra"
+	"github.com/spf13/viper"
 )
 
 // slackCmd represents the slack command
@@ -30,20 +31,28 @@ var slackCmd = &cobra.Command{
 You can run plan for only a single file or instead output plans for all your terraform repos.
 It's good practice to output these plans to different slack channels to keep things organized,
 even though it leads to managing more webhooks in slack.`,
-	Run: func(cmd *cobra.Command, args []string) {
-
-		project, err := cmd.Flags().GetString("project")
-		if err != nil {
-			log.Fatalf("Project name not given or not found in your .tbt config file, %s\n", err)
-		}
-
-		tbt.GetTerraformPlanAndPostToSlack(project)
-
-	},
+	Run: slackCmdRun,
 }
 
 func init() {
 	rootCmd.AddCommand(slackCmd)
 
 	slackCmd.Flags().StringP("project", "p", "", "The name of the project set in your .tbt config file for this plan")
+}
+
+func slackCmdRun(cmd *cobra.Command, args []string) {
+	project, err := cmd.Flags().GetString("project")
+	if err != nil {
+		log.Fatalf("Unable to parse the project name passed., %s\n", err)
+	}
+
+	if len(project) > 0 {
+		tbt.GetTerraformPlanAndPostToSlack(project)
+	} else {
+		projects := viper.GetStringMap("projects")
+
+		for project := range projects {
+			tbt.GetTerraformPlanAndPostToSlack(project)
+		}
+	}
 }

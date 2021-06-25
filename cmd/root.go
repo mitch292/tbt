@@ -17,6 +17,7 @@ package cmd
 
 import (
 	"fmt"
+	"log"
 	"os"
 
 	homedir "github.com/mitchellh/go-homedir"
@@ -65,15 +66,13 @@ func initConfig() {
 			os.Exit(1)
 		}
 
-		// Search config in home directory with name ".tbt" (without extension).
 		viper.AddConfigPath(home)
 		viper.SetConfigName(".tbt")
 	}
 
-	viper.AutomaticEnv() // read in environment variables that match
+	viper.AutomaticEnv()
 
-	// If a config file is found, read it in.
-	if err := viper.ReadInConfig(); err == nil {
-		fmt.Println("Using config file:", viper.ConfigFileUsed())
+	if err := viper.ReadInConfig(); err != nil {
+		log.Fatal("Config file was not found.")
 	}
 }
