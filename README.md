@@ -1,4 +1,4 @@
-## What is tbt?
+## What is tbt (To Be Terraformed)?
 
 tbt is a cli tool that you can use to keep track of the state of your infrastructure compared to your terraform configuration. It'll clone your git repo, run terraform plan, output that to a slack channel.
 
