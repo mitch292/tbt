@@ -8,6 +8,9 @@ import (
 	"github.com/mitch292/tbt/internal/utils"
 )
 
+// PlanChangeIndicator is the text in the terraform output to indicate a change is needed.
+const PlanChangeIndicator = "Terraform will perform the following actions:"
+
 // Plan will execute a terraform plan command in a given repo
 func Plan(repoName, project string) []byte {
 
